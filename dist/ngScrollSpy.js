@@ -199,14 +199,13 @@ mod.service('ScrollSpy', function($window) {
 });
 mod.directive('affix', function(ScrollSpy) {
   var affixFn= function(shouldAffixFn, wasAffixed, affixClass, elem) {
-    var shouldAffix= shouldAffixFn(elem[0].getBoundingClientRect());
-    if(shouldAffix !== wasAffixed) {
-      if(shouldAffix) {
-        elem.addClass(affixClass);
-      } else {
-        elem.removeClass(affixClass);
+      if (elem.hasClass(affixClass)) {
+          elem.removeClass(affixClass);
       }
-    }
+      var obj = elem[0].getBoundingClientRect();
+      if (obj.bottom <= obj.height && !elem.hasClass(affixClass)) {
+          elem.addClass(affixClass);
+      }
   };
 
   var scrollHandler;
